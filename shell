@@ -1,8 +1,13 @@
 #!/usr/bin/env php
 <?php
 
+
+
 require_once 'vendor/autoload.php';
 require_once 'src/Shell/helpers/helpers.php';
 
+// remove the 'shell' string from the request
 unset($argv[0]);
+
+// instantiate the Shell class
 $shell = new \Shell\Shell($argv);

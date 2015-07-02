@@ -32,52 +32,59 @@ class System
     protected $_command;
 
 
-    /**
-    *   Response instance.
-    *
-    *   @var \Shell\System\Response
-    */
     public function __construct()
     {
         $this->_response = new Response();
+
+        $this->_commander = new Commander();
     }
 
 
     /**
-    *   Response instance.
+    *   Attempt to run the requested command.
     *
-    *   @var \Shell\System\Response
+    *   @return Response.
     */
     public function run($command)
     {
         $this->_command = $command;
 
-        dd($this->_parseCommand());
-        if ($this->_parseCommand())
-        {
+        if ($this->_parseCommand()) {
+
             $this->_execute();
-        }
-        else 
-        {
+
+        } else  {
+
             $this->_fail();
+
         }
     }
 
 
     /**
-    *   Response instance.
+    *   Checks if a command is passed, exists and is valid.
     *
-    *   @var \Shell\System\Response
+    *   @return boolean
     */
     private function _parseCommand()
     {
 
         if ( ! $this->_commandHasBeenPassed() ) {
+
             $this->_response->outputNoCommandPassed();
+
         }
 
         if ( ! $this->_commandExists() ) {
+
             $this->_response->outputCommandDoesntExist($this->_command[1]);
+
+        }
+
+        if ( ! $this->_commandIsValid() ) {
+
+            $this->_response->outputInvalidCommand($this->_command[1]);
+            
         }
 
         return true;
@@ -85,23 +92,32 @@ class System
 
 
     /**
-    *   Response instance.
+    *   Checks if the requested command is valid.
+    *   By valid, I mean, has all the required paramters etc.
     *
-    *   @var \Shell\System\Response
+    *   @return boolean 
+    */
+    private function _commandIsValid()
+    {
+        return $this->_commander->checkCommand($this->_command);
+    }
+
+
+    /**
+    *   Checks if the requested command exists in the available.commands.file.php .
+    *
+    *   @return boolean
     */
     private function _commandExists()
     {
-
-        $this->_commander = new Commander();
-
         return $this->_commander->commandExists($this->_command[1]);
     }
 
 
     /**
-    *   Response instance.
+    *   Checks if a command has been passed / requested.
     *
-    *   @var \Shell\System\Response
+    *   @return boolean
     */
     private function _commandHasBeenPassed()
     {
@@ -112,13 +128,13 @@ class System
 
 
     /**
-    *   Response instance.
+    *   Returns command request failure.
     *
-    *   @var \Shell\System\Response
+    *   @return Response.
     */
     private function _fail()
     {
-        echo $this->_command[1] . " command has not been found!" . PHP_EOL;
+        echo $this->_command[1] . " command could not be executed!" . PHP_EOL;
         die();
     }
 

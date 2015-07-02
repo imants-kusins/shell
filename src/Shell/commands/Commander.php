@@ -6,15 +6,28 @@ namespace Shell\Commands;
 class Commander
 {
 
+    /**
+    *   All available commands storage property.
+    *
+    *   @var \Shell\Commands
+    */
     protected $_allAvailableCommands;
 
-    public function __construct() {
+
+    public function __construct()
+    {
 
         // load up all the registered commands
         $this->_allAvailableCommands = $this->_grabAvailableCommands();
 
     }
 
+
+    /**
+    *   Check if the command exists in the command file.
+    *
+    *   @return boolean
+    */
     public function commandExists($command)
     {
        
@@ -24,6 +37,23 @@ class Commander
 
     }
 
+
+    /**
+    *   Check if the command is valid.
+    *
+    *   @return boolean
+    */
+    public function checkCommand($command)
+    {
+        return false;
+    }
+
+
+    /**
+    *   Return available commands from file.
+    *
+    *   @return mixed
+    */
     private function _grabAvailableCommands()
     {
         if ( file_exists(__DIR__ . '\available.commands.php') )
@@ -34,8 +64,9 @@ class Commander
         } 
         else 
         {
-            throw new Exception("available.commands.php file doesn't exist in " . __DIR__ . " directory!");
-            
+
+            die("available.commands.php file doesn't exist in " . __DIR__ . " directory!");
+
         }
     }
 
