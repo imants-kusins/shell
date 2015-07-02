@@ -2,11 +2,18 @@
 
 namespace Shell\Commands\Help;
 
+use Shell\System\Response as Response;
+
 class Help
 {
-    public function __contruct()
+
+    protected $_response;
+
+    public function __construct()
     {
-        die("Help constructed!");
+
+        $this->_response = new Response();
+
     }
 
     public function fail()
