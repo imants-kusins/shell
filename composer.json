@@ -1,0 +1,20 @@
+{
+    "name": "imants/shell",
+    "description": "Multi-Purpose Command Line Interface / Shell",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Imants Kusins",
+            "email": "imants.kusins@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shell\\": "src/Shell"
+        }
+    }
+}

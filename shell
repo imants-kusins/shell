@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+require_once 'src/Shell/helpers/helpers.php';
+
+unset($argv[0]);
+$shell = new \Shell\Shell($argv);
