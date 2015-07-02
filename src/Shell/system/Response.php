@@ -8,7 +8,7 @@ class Response
 
     
     public function __construct() {}
-    
+
 
     public function outputSimple($output)
     {
@@ -30,7 +30,7 @@ class Response
 
     public function outputCommandDoesntExist($command)
     {
-        $this->_print("Command '" . $command . "' doesn't exists.");
+        $this->_print("Command '" . $command . "' cannot be found :(");
     }
 
 

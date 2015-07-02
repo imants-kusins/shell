@@ -8,11 +8,20 @@ class Commander
 
     protected $_allAvailableCommands;
 
-    public function __construct() {}
+    public function __construct() {
+
+        // load up all the registered commands
+        $this->_allAvailableCommands = $this->_grabAvailableCommands();
+
+    }
 
     public function commandExists($command)
     {
-       $this->_allAvailableCommands = $this->_grabAvailableCommands();
+       
+       if ( ! array_key_exists($command, $this->_allAvailableCommands) ) return false;
+
+       return true;
+
     }
 
     private function _grabAvailableCommands()
@@ -20,11 +29,12 @@ class Commander
         if ( file_exists(__DIR__ . '\available.commands.php') )
         {
             require_once 'available.commands.php';
-            dd($AVAILABLE_COMMANDS);
+
+            return $AVAILABLE_COMMANDS;
         } 
         else 
         {
-            throw new Exception("available.commands.php file doesn't exist in " . __DIR__ . " directory!", 1);
+            throw new Exception("available.commands.php file doesn't exist in " . __DIR__ . " directory!");
             
         }
     }

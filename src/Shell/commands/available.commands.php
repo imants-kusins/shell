@@ -2,6 +2,8 @@
 
 return $AVAILABLE_COMMANDS = [
 
-    "array of commands"
+    "help"  => [
+                    "required-param-count"  => 2
+    ],
 
 ];
