@@ -51,7 +51,7 @@ class System
 
         if ($this->_parseCommand()) {
 
-            $this->_execute();
+            $this->_commander->execute($command);
 
         } else  {
 
@@ -84,7 +84,7 @@ class System
         if ( ! $this->_commandIsValid() ) {
 
             $this->_response->outputInvalidCommand($this->_command[1]);
-            
+
         }
 
         return true;

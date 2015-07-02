@@ -3,6 +3,7 @@
 
 namespace Shell\Commands;
 
+
 class Commander
 {
 
@@ -12,6 +13,12 @@ class Commander
     *   @var \Shell\Commands
     */
     protected $_allAvailableCommands;
+
+
+    protected $_fullRequest;
+
+
+    protected $_command;
 
 
     public function __construct()
@@ -45,7 +52,23 @@ class Commander
     */
     public function checkCommand($command)
     {
+        // set the full request to operate with afterwards
+        $this->_fullRequest = $command;
+
+        // set just the command for later user
+        $this->_command = $command[1];
+
+        if( $this->_allAvailableCommands[$this->_command]["required-param-count"] === $this->_checkCommandParameterCount() ) {
+            return true;
+        }
+
         return false;
+    }
+
+
+    private function _checkCommandParameterCount()
+    {
+        return count($this->_fullRequest) - 1;  // -1 to remove the command parameter.
     }
 
 
@@ -68,6 +91,12 @@ class Commander
             die("available.commands.php file doesn't exist in " . __DIR__ . " directory!");
 
         }
+    }
+
+
+    public function execute($command)
+    {
+        dd("Executing the command ! ");
     }
 
 }
