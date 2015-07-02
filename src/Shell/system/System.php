@@ -2,21 +2,52 @@
 
 namespace Shell\System;
 
-use \Shell\System\Response as Response;
+use Shell\System\Response as Response;
+use Shell\Commands\Commander as Commander;
 
 class System
 {
 
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     private $_response;
 
+
+    /**
+    *   Commander instance.
+    *
+    *   @var \Shell\Commands\Commander
+    */
+    private $_commander;
+
+
+    /**
+    *   User input command.
+    *
+    *   @var \Shell\System
+    */
     protected $_command;
 
 
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     public function __construct()
     {
         $this->_response = new Response();
     }
 
+
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     public function run($command)
     {
         $this->_command = $command;
@@ -33,30 +64,45 @@ class System
     }
 
 
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     private function _parseCommand()
     {
 
         if ( ! $this->_commandHasBeenPassed() ) {
-            $this->_response->output("Please pass a command to the CLI.");
+            $this->_response->outputNoCommandPassed();
         }
 
-        // Verify if the command exists in the engine.
         if ( ! $this->_commandExists() ) {
-            $this->_response->output("Command '" . $this->_command[1] . "' doesn't exist.");
+            $this->_response->outputCommandDoesntExist($this->_command[1]);
         }
-
 
         return true;
     }
 
 
-
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     private function _commandExists()
     {
-        return false;
+
+        $this->_commander = new Commander();
+
+        return $this->_commander->commandExists($this->_command[1]);
     }
 
 
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     private function _commandHasBeenPassed()
     {
         if (count($this->_command) === 0) return false;
@@ -65,6 +111,11 @@ class System
     }
 
 
+    /**
+    *   Response instance.
+    *
+    *   @var \Shell\System\Response
+    */
     private function _fail()
     {
         echo $this->_command[1] . " command has not been found!" . PHP_EOL;
