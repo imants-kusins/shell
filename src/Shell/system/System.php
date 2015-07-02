@@ -2,10 +2,20 @@
 
 namespace Shell\System;
 
+use \Shell\System\Response as Response;
+
 class System
 {
 
+    private $_response;
+
     protected $_command;
+
+
+    public function __construct()
+    {
+        $this->_response = new Response();
+    }
 
     public function run($command)
     {
@@ -27,12 +37,12 @@ class System
     {
 
         if ( ! $this->_commandHasBeenPassed() ) {
-            $this->_output("Please pass a command to the CLI.");
+            $this->_response->output("Please pass a command to the CLI.");
         }
 
         // Verify if the command exists in the engine.
         if ( ! $this->_commandExists() ) {
-            $this->_output("Command '" . $this->_command[1] . "' doesn't exist.");
+            $this->_response->output("Command '" . $this->_command[1] . "' doesn't exist.");
         }
 
 
@@ -54,12 +64,6 @@ class System
         return true;
     }
 
-
-    private function _output($outputString)
-    {
-        echo $outputString . PHP_EOL;
-        die();
-    }
 
     private function _fail()
     {
